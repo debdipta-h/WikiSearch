@@ -6,10 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.ProgressDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -104,6 +108,24 @@ public class SearchDisplayActivity extends AppCompatActivity {
                    "link"}, new int[]{R.id.title,
                    R.id.description, R.id.link});
             lv.setAdapter(adapter);
+            AdapterView.OnItemClickListener listener=new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    String link=((TextView) view).getText().toString();
+                }
+            };
+            AdapterView.OnItemClickListener listener1=new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    LinearLayout layout=(LinearLayout) view ;
+                    TextView link= layout.findViewById(R.id.link);
+                    String val=link.getText().toString();
+                    Intent viewIntent=new Intent(getApplicationContext(),ItemViewActivity.class);
+                    viewIntent.putExtra("LINK",val);
+                    startActivity(viewIntent);
+                }
+            };
+            lv.setOnItemClickListener(listener1);
         }
 
     }
