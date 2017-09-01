@@ -19,9 +19,14 @@ public class HttpHandler {
     private String url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=\"%s\"&format=json&callback=?";
     private static final String TAG = HttpHandler.class.getSimpleName();
     private String finalUrl;
-
+    private final static String DEFAULTSEARCHTERM="Wikipedia";
     public HttpHandler(String searchTerm) {
-        finalUrl = String.format(url, searchTerm);
+        if(searchTerm==null || searchTerm.isEmpty()){
+            finalUrl = String.format(url, DEFAULTSEARCHTERM);
+        }
+        else {
+            finalUrl = String.format(url, searchTerm);
+        }
     }
 
     public String makeServiceCall() {
